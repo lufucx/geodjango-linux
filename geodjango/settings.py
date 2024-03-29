@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'teste',
         'USER': 'postgres',
-        'PASSWORD': 'plasticlove00',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -137,4 +137,5 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 20,
     'MIN_ZOOM':3,
     'SCALE': 'both',
+    'RESET_VIEW': False
 }
