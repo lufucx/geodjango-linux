@@ -5,5 +5,5 @@ from markers.models import Marker
 
 @admin.register(Marker)
 class MarkerAdmin(LeafletGeoAdmin):
-    list_display = ("name", "description", "location", "hyperlink")
+    list_display = ("name", "description", "location", "hyperlink", "categories", "city")
     search_fields = ("name", "description")

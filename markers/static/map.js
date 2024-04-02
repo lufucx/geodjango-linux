@@ -38,8 +38,9 @@ async function load_markers() {
 async function render_markers() {
     const markers = await load_markers();
     markerClusters.clearLayers(); // Clear existing markers before adding new ones
-    
     markers.features.forEach(function(feature) {
+        const categoryId = feature.properties.categories; // Assuming the foreign key for categories is named 'categories'
+        const cityId = feature.properties.city; // Assuming the foreign key for cities is named 'city'
         var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
         
         var popupContent = '<b>' + feature.properties.name + '</b>';
@@ -54,5 +55,15 @@ async function render_markers() {
         markerClusters.addLayer(marker); // Add marker to the cluster group
     });
 }
+// Layer Control
+const baseLayers = {
+    "OpenStreetMap": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png')
+};
+
+const overlayLayers = {
+    "Markers": markerClusters
+}
+
+L.control.layers(baseLayers, overlayLayers).addTo(map);
 
 map.on("moveend", render_markers);

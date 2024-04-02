@@ -14,7 +14,7 @@ class Category(models.Model):
         return self.category_name
 
 class City(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField('Cidade', max_length=50, help_text="Especifique a cidade da Região")
 
     class Meta: 
         verbose_name_plural = 'Cities'
