@@ -38,10 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.gis",
+
+    # 3rd party apps
     "rest_framework",
     "rest_framework_gis",
-    "markers",
     "leaflet",
+    
+    # Local Apps
+    "markers",
     "categories.apps.CategoriesConfig",
 ]
 

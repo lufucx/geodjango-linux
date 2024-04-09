@@ -7,17 +7,215 @@
     <title>Mapa de Conflitos Ambientais - Edição</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="{% static 'map.css' %}">
+    <link rel="stylesheet" href="{% static '/css/map.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
-<body>
+<body>  <header class="header">
+    <div class="logo">
+      <a href=""><img src="{% static '/assets/Logo.svg'%}" alt=""></a>
+      <a class="logo-texto" href="">Conflitos<span>Ambientais</span></a>
+    </div>
+
+    <nav class="navbar">
+      <a href="">Início</a>
+      <a href="equipe.html">Equipe</a>
+      <a href="#">Sobre Nós</a>
+      <a href="#">Contate-nos</a>
+    </nav>
+
+    <div class="fa-solid fa-bars" id="menu-icon"></div>
+  </header>
+
+  <div class="mapa">
+    <h1>Conflitos Ambientais na Região Dos Lagos</h1>
     {{ markers|json_script:'markers-data' }}
     <div id="map"></div>
+  </div>
+
+  <section class="container-legenda">
+    <div class="conteudo-legenda">
+
+      <div class="legenda-titulo">
+        <img src="{% static '/assets/Pin.svg'%}"">
+        <h1>Classificação de Risco</h1>
+      </div>
+
+      <div class="lista-pins">
+        <div class="pin">
+          <div class="pin-image">
+          </div>
+          <div class="pin-texto">
+            <div class="pin-titulo">
+              <h1>Muito Alto</h1>
+            </div>
+            <div class="pin-paragrafo">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
+                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
+                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
+                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
+                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
+                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
+                eos temporibus. Harum dolore voluptates facilis!
+
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="pin">
+          <div class="pin-image">
+          </div>
+          <div class="pin-texto">
+            <div class="pin-titulo">
+              <h1>Alto</h1>
+            </div>
+            <div class="pin-paragrafo">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis similique placeat commodi
+                id distinctio cum totam unde. Possimus laboriosam voluptates debitis necessitatibus
+                nihil. Odit repellat doloribus et blanditiis veritatis architecto? Lorem ipsum dolor sit
+                amet, consectetur adipisicing elit. Sequi eligendi cum est architecto beatae. Error
+                repellendus quod ea, accusamus earum rerum exercitationem, harum hic laborum quisquam ut
+                nesciunt doloremque repellat.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="pin">
+          <div class="pin-image">
+          </div>
+          <div class="pin-texto">
+            <div class="pin-titulo">
+              <h1>Moderado</h1>
+            </div>
+            <div class="pin-paragrafo">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
+                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
+                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
+                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
+                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
+                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
+                eos temporibus. Harum dolore voluptates facilis!</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="pin">
+          <div class="pin-image">
+          </div>
+          <div class="pin-texto">
+            <div class="pin-titulo">
+              <h1>Baixo</h1>
+            </div>
+            <div class="pin-paragrafo">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
+                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
+                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
+                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
+                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
+                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
+                eos temporibus. Harum dolore voluptates facilis!</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="pin">
+          <div class="pin-image">
+
+          </div>
+          <div class="pin-texto">
+            <div class="pin-titulo">
+              <h1>Muito Baixo</h1>
+            </div>
+            <div class="pin-paragrafo">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
+                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
+                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
+                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
+                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
+                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
+                eos temporibus. Harum dolore voluptates facilis!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-cards">
+    <h1 class="container-cards-titulo">Artigos Utilizados</h1>
+    <div class="conteudo-cards">
+      <div class="card">
+        <img class="card-img" src="https://cdn.pensador.com/img/authors/mi/ch/michel-foucault-l.jpg" alt="">
+        <div class="card-body">
+          <h1 class="card-title">Foucault</h1>
+          <p class="card-sub-title">Em Defesa da Sociedade</p>
+          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
+            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
+            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
+
+          <button class="card-btn">Ver Mais</button>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="https://gripinequality.org/wp-content/uploads/2020/08/Maria-Paula-Meneses-scaled.jpg"
+          alt="">
+        <div class="card-body">
+          <h1 class="card-title">Maria Paula</h1>
+          <p class="card-sub-title"></p>
+          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
+            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
+            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
+
+          <button class="card-btn">Book Tour</button>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="https://planksun.blob.core.windows.net/sun-site-files/706/437-6.jpg" alt="">
+        <div class="card-body">
+          <h1 class="card-title">Robert Bullard</h1>
+          <p class="card-sub-title"></p>
+          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
+            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
+            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
+
+          <button class="card-btn">Book Tour</button>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="https://cdl-static.s3-sa-east-1.amazonaws.com/colaboradores/02487_gg.jpg" alt="">
+        <div class="card-body">
+          <h1 class="card-title">Angela Alonso</h1>
+          <p class="card-sub-title"></p>
+          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
+            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
+            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
+
+          <button class="card-btn">Book Tour</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
     
 
-    <script src="{% static 'map.js' %}"></script>
+    <script src="{% static '/js/map.js' %}"></script>
+    <script src="{% static '/js/MenuIcon.js' %}"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>z
+    
 </body>
 </html>

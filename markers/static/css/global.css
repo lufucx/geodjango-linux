@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+
+
+:root {
+  --Fonte: 'Lato', sans-serif;
+  --FTitulos: 'Inter', serif;
+  --TTitulos: 40px;
+  --TParagrafos: 14px;
+  --CorPrincipal: #271d3b;
+  --CorSecundaria: #d5c4e8;
+  --CorTerciaria: #b8a7c9;
+  --CorBotoes: #f2eaed;
+}

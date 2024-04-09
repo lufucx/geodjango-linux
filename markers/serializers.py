@@ -1,14 +1,11 @@
-from rest_framework_gis.serializers import (
-    GeoFeatureModelSerializer,
-)
-
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from markers.models import Marker
+from rest_framework import serializers
+class MarkerSerializer(GeoFeatureModelSerializer):
+    categories = serializers.StringRelatedField()
+    city = serializers.StringRelatedField()
 
-
-class MarkerSerializer(
-    GeoFeatureModelSerializer
-):
     class Meta:
-        fields = ['id', 'name', 'description', 'hyperlink']
-        geo_field = "location"
         model = Marker
+        fields = ['id', 'name', 'categories', 'city', 'description', 'hyperlink']
+        geo_field = "location"
