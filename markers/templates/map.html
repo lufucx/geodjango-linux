@@ -17,13 +17,13 @@
 </head>
 <body>  <header class="header">
     <div class="logo">
-      <a href=""><img src="{% static '/assets/Logo.svg'%}" alt=""></a>
+      <a href="{% url 'markers:markersmapview' %}"><img src="{% static '/assets/Logo.svg'%}" alt=""></a>
       <a class="logo-texto" href="">Conflitos<span>Ambientais</span></a>
     </div>
 
     <nav class="navbar">
-      <a href="">Início</a>
-      <a href="equipe.html">Equipe</a>
+      <a href="{% url 'markers:markersmapview' %}">Início</a>
+      <a href="{% url 'posts:lista_posts' %}">Artigos</a>
       <a href="#">Sobre Nós</a>
       <a href="#">Contate-nos</a>
     </nav>

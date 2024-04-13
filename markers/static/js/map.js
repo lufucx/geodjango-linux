@@ -44,8 +44,9 @@ markers.features.forEach(function(feature) {
     if (feature.properties.description) {
         popupContent += '<br>' + feature.properties.description;
     }
-    if (feature.properties.hyperlink) {
-        popupContent += '<br><a href="' + feature.properties.hyperlink + '">Ver Mais</a>';
+    if (feature.properties.post) {
+        var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
+        popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
     }
     
     marker.bindPopup(popupContent);
@@ -82,8 +83,9 @@ async function render_markers() {
         if (feature.properties.description) {
             popupContent += '<br>' + feature.properties.description;
         }
-        if (feature.properties.hyperlink) {
-            popupContent += '<br><a href="' + feature.properties.hyperlink + '">Ver Mais</a>';
+        if (feature.properties.post) {
+            var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
+            popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
         }
         
         marker.bindPopup(popupContent);

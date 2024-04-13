@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>{{ post.titulo }}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Marker Cluster CSS and JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="{% url 'markers:markersmapview' %}">
+                <img src="{% static 'assets/Logo.svg' %}" alt="Logo">
+            </a>
+            <a class="logo-texto" href="#">Conflitos<span>Ambientais</span></a>
+        </div>
+        <nav class="navbar">
+            <a href="{% url 'markers:markersmapview' %}">Início</a>
+            <a href="{% url 'posts:lista_posts' %}">Artigos</a>
+            <a href="#">Sobre Nós</a>
+            <a href="#">Contate-nos</a>
+        </nav>
+        <button id="menu-icon" class="fa fa-bars"></button>
+    </header>
+
+    <main>
+        <h1>{{ post.titulo }}</h1>
+        <p>Por {{ post.autor }}</p>
+        <p>Publicado em: {{ post.data_publicacao }}</p>
+        <p>Tema: {{ post.tema }}</p>
+        <p>Município Atingido: {{ post.municipio_atingido }}</p>
+        <p>Atores Envolvidos: {{ post.atores_envolvidos }}</p>
+        <p>População Atingida: {{ post.populacao_atingida }}</p>
+        <p>Fontes: {{ post.fontes }}</p>
+    </main>
+
+    <!-- Footer (optional) -->
+    <footer>
+        <!-- Add footer content here if desired -->
+    </footer>
+</body>
+
+</html>

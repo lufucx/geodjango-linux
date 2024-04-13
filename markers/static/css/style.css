@@ -456,3 +456,66 @@ body {
   font-weight: 600;
   margin-bottom: 20px;
 }
+
+/* ======================================================== POSTS ================================================== */
+/* Estilização para a seção <main> */
+main {
+  max-width: 800px; /* Limita a largura máxima da seção */
+  margin: 20px auto; /* Centraliza a seção com margem superior e inferior */
+  padding: 20px; /* Adiciona preenchimento interno */
+  background-color: #f9f9f9; /* Define uma cor de fundo clara */
+  border-radius: 8px; /* Adiciona cantos arredondados */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil */
+}
+
+/* Estilização para títulos dentro da seção <main> */
+main h1 {
+  font-size: 2rem; /* Define o tamanho da fonte para o título */
+  margin-bottom: 10px; /* Adiciona margem inferior ao título */
+  color: #333; /* Define a cor do título */
+}
+
+/* Estilização para parágrafos dentro da seção <main> */
+main p {
+  font-size: 1rem; /* Define o tamanho da fonte para os parágrafos */
+  margin-bottom: 10px; /* Adiciona margem inferior aos parágrafos */
+  color: #666; /* Define a cor do texto */
+  line-height: 1.5; /* Define o espaçamento entre linhas */
+}
+
+/* Adiciona estilos para links dentro da seção <main> */
+main a {
+  color: #007BFF; /* Define uma cor para os links */
+  text-decoration: none; /* Remove sublinhado dos links */
+}
+
+main a:hover {
+  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+/* Estilização da lista não ordenada */
+ul {
+  list-style-type: none; /* Remove os marcadores padrão */
+  padding: 0; /* Remove o preenchimento interno */
+  margin: 0; /* Remove a margem externa */
+}
+
+/* Estilização dos itens da lista */
+ul li {
+  padding: 10px 0; /* Adiciona espaço entre os itens da lista */
+  border-bottom: 1px solid #ddd; /* Adiciona uma linha de separação entre os itens */
+}
+
+/* Estilização dos links nos itens da lista */
+ul li a {
+  text-decoration: none; /* Remove a sublinhado dos links */
+  color: #007BFF; /* Define a cor do texto dos links */
+  font-weight: bold; /* Define o texto dos links em negrito */
+  display: block; /* Faz com que o link ocupe todo o espaço do item da lista */
+  padding: 10px; /* Adiciona preenchimento ao link */
+}
+
+/* Estilização dos links nos itens da lista ao passar o mouse */
+ul li a:hover {
+  background-color: #f5f5f5; /* Define a cor de fundo ao passar o mouse */
+}

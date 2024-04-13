@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     
     # Local Apps
     "markers",
-    "categories.apps.CategoriesConfig",
+    "posts",
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'geodjango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'teste',
+        'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',

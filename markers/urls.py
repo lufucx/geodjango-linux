@@ -6,7 +6,6 @@ app_name = "markers"
 
 urlpatterns = [
     path(
-        "", MarkersMapView.as_view()
-    ),
+        "", MarkersMapView.as_view(), name='markersmapview'),
 ]
 
