@@ -1,8 +1,7 @@
 var map = L.map('map').setView([-22.8932366, -42.1567423], 11);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
@@ -23,7 +22,6 @@ var greenIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
-
 
 const markers = JSON.parse(document.getElementById('markers-data').textContent);
 
@@ -92,6 +90,7 @@ async function render_markers() {
         markerClusters.addLayer(marker); // Add marker to the cluster group
     });
 }
+
 // Layer Control
 const baseLayers = {
     "OpenStreetMap": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
@@ -102,3 +101,23 @@ const baseLayers = {
 L.control.layers(baseLayers).addTo(map);
 
 map.on("moveend", render_markers);
+
+//Full screen map view
+var mapId = document.getElementById('map');
+function fullScreenView() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen()
+    } else {
+        mapId.requestFullscreen();
+    }
+}
+
+// Reset view
+$('.zoom-to-layer').click(function () {map.setView([-22.8932366, -42.1567423], 11)});
+
+// Print map
+L.control.browserPrint({ position: 'topright' }).addTo(map);
+
+
+// Search function
+L.Control.geocoder().addTo(map);
