@@ -15,7 +15,7 @@ class MarkersMapView(TemplateView):
 
 
         # Serialize markers, categories, and cities to GeoJSON format
-        serialized_markers = serialize('geojson', markers, fields=('name', 'description', 'location'))
+        serialized_markers = serialize('geojson', markers, fields=('name', 'description', 'location',  'icon_choice'))
 
 
         # Pass serialized data to the template context

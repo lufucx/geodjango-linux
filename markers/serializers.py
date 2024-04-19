@@ -7,5 +7,5 @@ class MarkerSerializer(GeoFeatureModelSerializer):
 
     class Meta:
         model = Marker
-        fields = ['id', 'name', 'categories', 'city', 'description', 'post']
+        fields = ['id', 'name', 'categories', 'city', 'description', 'post', 'icon_choice']
         geo_field = "location"

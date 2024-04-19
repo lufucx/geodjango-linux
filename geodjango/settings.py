@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_gis",
     "leaflet",
+    "ckeditor",
     
     # Local Apps
     "markers",
@@ -143,4 +144,10 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM':3,
     'SCALE': 'both',
     'RESET_VIEW': False
+}
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'versionCheck': False
+    }
 }

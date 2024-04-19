@@ -43,13 +43,23 @@
 
     <main>
         <h1>{{ post.titulo }}</h1>
-        <p>Por {{ post.autor }}</p>
-        <p>Publicado em: {{ post.data_publicacao }}</p>
-        <p>Tema: {{ post.tema }}</p>
-        <p>Município Atingido: {{ post.municipio_atingido }}</p>
-        <p>Atores Envolvidos: {{ post.atores_envolvidos }}</p>
-        <p>População Atingida: {{ post.populacao_atingida }}</p>
-        <p>Fontes: {{ post.fontes }}</p>
+        <small>
+            <p>Por - {{ post.autor.first_name }}
+                {{ post.autor.last_name }}</p>
+            <p>Publicado em: {{ post.data_publicacao }}</p>
+        </small>
+        <h2>Tema</h2>
+        <p>{{ post.tema }}</p>
+        <h2>Município Atingido</h2>
+        <p>{{ post.municipio_atingido }}</p>
+        <h2>Atores Envolvidos</h2>
+        <p>{{ post.atores_envolvidos }}</p>
+        <h2>População Atingida</h2>
+        <p>{{ post.populacao_atingida }}</p>
+        <hr>
+        {{ post.conteudo | safe}}
+        <h2>Fontes</h2>
+        <p>{{ post.fontes | safe}}</p>
     </main>
 
     <!-- Footer (optional) -->
