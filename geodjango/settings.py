@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -150,4 +151,27 @@ CKEDITOR_CONFIGS = {
     'default': {
         'versionCheck': False
     }
+}
+JAZZMIN_SETTINGS = {
+    "site_title": "Mapa Conflitos Admin",
+    "site_header": "Conflitos Ambientais - Admin",
+    "site_brand": " Mapa - Admin",
+    "site_icon": None,
+    "user_avatar": None,
+    "login_logo": None,
+    "show_ui_builder": True,
+        "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Inicio",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        {"name": "Visualizar o site", "url": "markers:markersmapview", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "books"},
+    ],
 }
