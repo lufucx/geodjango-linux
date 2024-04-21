@@ -192,15 +192,15 @@ let CollapsibleTextbox = L.Control.extend({
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
             <span style="display:inline; vertical-align:top;">Vermelho</span><br>
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Verde</span><br>
+            <span style="display:inline; vertical-align:top;">São Pedro da Aldeia</span><br>
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Laranja</span><br>
+            <span style="display:inline; vertical-align:top;">Búzios</span><br>
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Amarelo</span><br>
+            <span style="display:inline; vertical-align:top;">Cabo Frio</span><br>
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Azul</span><br>
+            <span style="display:inline; vertical-align:top;">Arraial do Cabo</span><br>
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Roxo</span><br>
+            <span style="display:inline; vertical-align:top;">Araruama</span><br>
         `;
         
         // Add styles to the text box

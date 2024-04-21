@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+    background: rgba(254, 254, 254, 0.96) !important;
+    backdrop-filter: blur(3px);
+}
+
+.navbar-nav .nav-item {
+    margin-right: 30px;
+}
+
+.navbar-brand {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 3px;
+}
+
+.navbar-logo {
+    width: 75px;
+    background-color: #A9CF54;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.custom-container {
+    margin-top: 90px !important;
+    background-color: #f9fbfd;
+}
+
+main {
+    margin-top: 180px;
+}
+
+.reg-cor {
+    color: #A9CF54;
+}
+
+.loc-png {
+    width: 40px;
+    height: 40px;
+}
+
+#map {
+    width: 100%;
+    height: 60vh;
+    /* Defina a altura como uma porcentagem da altura da viewport */
+    border-radius: 8px;
+    /* Adicione borda arredondada conforme necessário */
+}
+
+.map {
+    position: relative;
+}
+
+.map iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    #map {
+        height: 100vh;
+        /* Em telas menores, reduza a altura */
+    }
+}
+
+
+.underline {
+    width: 170px;
+    /* largura da linha */
+    height: 3px;
+    /* altura da linha */
+    background-color: #A9CF54;
+    /* cor da linha */
+    margin: 0 auto 40px;
+    /* margem para posicionamento */
+}
+
+.card {
+    border: none;
+    padding: 15px;
+}
+
+.card-photo {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 150px;
+
+}
+
+.socials {
+    display: flex;
+    gap: 5px;
+}

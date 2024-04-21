@@ -2,242 +2,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />    
-    <title>Mapa de Conflitos Ambientais da Região dos Lagos</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{% static '/js/leaflet.browser.print.min.js' %}"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <link rel="stylesheet" href="{% static '/css/map.css' %}">
-    <link rel="stylesheet" href="{% static '/css/style.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>EcoLagos Conflitos</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+  <!-- Leaflet Print Plugin -->
+  <script src="{% static '/js/leaflet.browser.print.min.js' %}"></script>
+  
+  <!-- Leaflet Control Geocoder -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+  
+  <!-- Leaflet Marker Cluster -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
-<body>  <header class="header">
-    <div class="logo">
-      <a href="{% url 'markers:markersmapview' %}"><img src="{% static '/assets/Logo.svg'%}" alt=""></a>
-      <a class="logo-texto" href="{% url 'markers:markersmapview' %}">Conflitos<span>Ambientais</span></a>
-    </div>
-
-    <nav class="navbar">
-      <a href="{% url 'markers:markersmapview' %}">Início</a>
-      <a href="{% url 'posts:lista_posts' %}">Artigos</a>
-      <a href="#">Sobre Nós</a>
-      <a href="#">Contate-nos</a>
+<body>  
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-4 fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'markers:markersmapview' %}">
+                <img class="navbar-logo me-3" src="{% static '/assets/Logo.svg' %}" alt="Logo EcoLagos">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'markers:markersmapview' %}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'posts:lista_posts' %}">Artigos publicados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Equipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contate-nos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
+</header>
 
-    <div class="fa-solid fa-bars" id="menu-icon"></div>
-  </header>
-
-  <div class="mapa">
-    <h1>Conflitos Ambientais na Região Dos Lagos</h1>
-    {{ markers|json_script:'markers-data' }}
-    <div id="map">
-      <div class="leaflet-control full-screen" onclick=fullScreenView()>
-        <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-arrows-fullscreen" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z" />
-        </svg>
-    </div>
-
-    <div class="leaflet-control zoom-to-layer">
-      <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd"
-              d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
-          <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-      </svg>
+<main>
+  <div class="container-fluid mb-5 pb-5">
+      <div class="row">
+          <div class="col-11 col-lg-4 mx-auto me-2">
+              <h1 class="display-3 text-center text-md-start">Conflitos Ambientais na <span class="reg-cor">Região
+                      dos Lagos</span></h1>
+              <div class="container-sm mt-5 text-dark">
+                  <p class="lead text-justify text-md-start text-body-secondary mb-5 mb-lg-4">Lorem, ipsum dolor
+                      sit amet consectetur adipisicing elit. Sequi, nesciunt. Beatae consequatur
+                      temporibus et eveniet sapiente, ipsa nostrum enim deleniti quasi ut placeat similique saepe
+                      facilis dolor nemo, labore quis!
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, ipsum. Tempora
+                      delectus sunt, officia inventore fugiat quaerat? Quod, rerum, incidunt ea, nisi temporibus
+                      quo fugiat magnam quam consectetur maiores iusto.
+                  </p>
+              </div>
+          </div>
+          <div class="col-12 col-lg-7 map  mx-auto ms-2">
+              {{ markers|json_script:'markers-data' }}
+              <div id="map"></div>
+          </div>
+      </div>
   </div>
-    </div>
+
+  <div class="container-fluid text-primary p-5 custom-container">
+      <h1 class="text-center p-5 display-4 text-dark"><img style="height: 60px; margin-right: 15px;"
+              src="{% static '/assets/Pin.svg' %}" alt="">Tipografia de Conflitos</h1>
+      <div class="row p-3">
+          <div class="col">
+              <h3 class="text-dark mt-5">Áreas Protegidas (Conservação/Biodiversidade):</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae
+                  aliquid cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+          <div class="col">
+              <h3 class="text-dark mt-5">Atividade Agrícola/Pecuária/Florestal:</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae
+                  aliquid cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+      </div>
+      <div class="row p-3">
+          <div class="col">
+              <h3 class="text-dark mt-5">Atividades Agroindustriais:</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum
+                  velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae aliquid
+                  cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+          <div class="col">
+              <h3 class="text-dark mt-5">Atividades Industriais</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum
+                  velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae aliquid
+                  cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+      </div>
+      <div class="row p-3">
+          <div class="col">
+              <h3 class="text-dark mt-5">Comércio e Serviços:</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum
+                  velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae aliquid
+                  cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+          <div class="col">
+              <h3 class="text-dark mt-5">Demanda Territorial</h3>
+              <p class="mt-4 text-dark">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magni
+                  earum
+                  velit eum alias dolores exercitationem accusamus possimus odio doloremque dolorum beatae aliquid
+                  cupiditate et, ea architecto eius pariatur deleniti.</p>
+          </div>
+      </div>
   </div>
 
-  <section class="container-legenda">
-    <div class="conteudo-legenda">
-
-      <div class="legenda-titulo">
-        <img src="{% static '/assets/Pin.svg'%}"">
-        <h1>Classificação de Risco</h1>
+  <div class="team-area mt-5">
+      <h1 class="text-center">Equipe</h1>
+      <div class="underline"></div>
+      <h5 class="text-center mt-4">ako alow alow alow alow alow alow alow alow alow alow</h5>
+      <div class="container mt-5">
+          <div class="row">
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="socials">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Omar</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="sociasl">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Só quer</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="sociasl">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Saber de</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="sociasl">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Cerveja</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="sociasl">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Churrasco</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 mt-5">
+                  <div class="card text-center align-items-center">
+                      <img class="card-photo" src="{% static '/assets/Ainda.jpeg' %}" alt="">
+                      <div class="card-body">
+                          <h4 class="card-title">Igor</h4>
+                          <p class="sociasl">
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                              <i></i>
+                          </p>
+                          <p class="text">Mulher</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
+  </div>
+  </div>
+</main>
 
-      <div class="lista-pins">
-        <div class="pin">
-          <div class="pin-image">
-          </div>
-          <div class="pin-texto">
-            <div class="pin-titulo">
-              <h1>Muito Alto</h1>
-            </div>
-            <div class="pin-paragrafo">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
-                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
-                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
-                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
-                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
-                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
-                eos temporibus. Harum dolore voluptates facilis!
-
-              </p>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="pin">
-          <div class="pin-image">
-          </div>
-          <div class="pin-texto">
-            <div class="pin-titulo">
-              <h1>Alto</h1>
-            </div>
-            <div class="pin-paragrafo">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis similique placeat commodi
-                id distinctio cum totam unde. Possimus laboriosam voluptates debitis necessitatibus
-                nihil. Odit repellat doloribus et blanditiis veritatis architecto? Lorem ipsum dolor sit
-                amet, consectetur adipisicing elit. Sequi eligendi cum est architecto beatae. Error
-                repellendus quod ea, accusamus earum rerum exercitationem, harum hic laborum quisquam ut
-                nesciunt doloremque repellat.</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="pin">
-          <div class="pin-image">
-          </div>
-          <div class="pin-texto">
-            <div class="pin-titulo">
-              <h1>Moderado</h1>
-            </div>
-            <div class="pin-paragrafo">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
-                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
-                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
-                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
-                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
-                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
-                eos temporibus. Harum dolore voluptates facilis!</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="pin">
-          <div class="pin-image">
-          </div>
-          <div class="pin-texto">
-            <div class="pin-titulo">
-              <h1>Baixo</h1>
-            </div>
-            <div class="pin-paragrafo">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
-                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
-                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
-                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
-                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
-                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
-                eos temporibus. Harum dolore voluptates facilis!</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="pin">
-          <div class="pin-image">
-
-          </div>
-          <div class="pin-texto">
-            <div class="pin-titulo">
-              <h1>Muito Baixo</h1>
-            </div>
-            <div class="pin-paragrafo">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius accusamus veniam sed
-                laborum nemo. Explicabo molestiae itaque adipisci dignissimos quam ea eius ratione
-                incidunt maxime! Quos officia rem maxime id. Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Unde vitae nisi explicabo nemo incidunt ex aut, alias, asperiores
-                itaque ea dicta corporis ipsam! Doloribus corrupti assumenda dolore rem similique
-                consequatur. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, omnis
-                alias rem quam a fuga et soluta obcaecati excepturi pariatur? Quo rerum distinctio ab
-                eos temporibus. Harum dolore voluptates facilis!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="container-cards">
-    <h1 class="container-cards-titulo">Artigos Utilizados</h1>
-    <div class="conteudo-cards">
-      <div class="card">
-        <img class="card-img" src="https://cdn.pensador.com/img/authors/mi/ch/michel-foucault-l.jpg" alt="">
-        <div class="card-body">
-          <h1 class="card-title">Foucault</h1>
-          <p class="card-sub-title">Em Defesa da Sociedade</p>
-          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
-            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
-            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
-
-          <button class="card-btn">Ver Mais</button>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img" src="https://gripinequality.org/wp-content/uploads/2020/08/Maria-Paula-Meneses-scaled.jpg"
-          alt="">
-        <div class="card-body">
-          <h1 class="card-title">Maria Paula</h1>
-          <p class="card-sub-title"></p>
-          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
-            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
-            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
-
-          <button class="card-btn">Book Tour</button>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img" src="https://planksun.blob.core.windows.net/sun-site-files/706/437-6.jpg" alt="">
-        <div class="card-body">
-          <h1 class="card-title">Robert Bullard</h1>
-          <p class="card-sub-title"></p>
-          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
-            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
-            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
-
-          <button class="card-btn">Book Tour</button>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img" src="https://cdl-static.s3-sa-east-1.amazonaws.com/colaboradores/02487_gg.jpg" alt="">
-        <div class="card-body">
-          <h1 class="card-title">Angela Alonso</h1>
-          <p class="card-sub-title"></p>
-          <p class="card-info">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis possimus
-            facere eaque expedita, iure tempore reprehenderit quo labore mollitia, eligendi vitae tempora,
-            blanditiis fuga consequatur officia error aspernatur optio impedit?</p>
-
-          <button class="card-btn">Book Tour</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-    
 
     <script src="{% static '/js/map.js' %}"></script>
     <script src="{% static '/js/MenuIcon.js' %}"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
     
 </body>
 </html>

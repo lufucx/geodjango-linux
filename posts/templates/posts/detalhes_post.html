@@ -44,9 +44,8 @@
     <main>
         <h1>{{ post.titulo }}</h1>
         <small>
-            <p>Por - {{ post.autor.first_name }}
-                {{ post.autor.last_name }}</p>
-            <p>Publicado em: {{ post.data_publicacao }}</p>
+            <p>Escrito por: {{ post.autor }}</p>
+            <p>Publicado em: {{ post.data_publicacao_formatada }}</p>
         </small>
         <h2>Tema</h2>
         <p>{{ post.tema }}</p>

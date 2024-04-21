@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
+from django.utils import timezone
 
 class Tema(models.Model):
     nome = models.CharField('Tema', max_length=255, help_text="Especifique o tema do Conflito Ambiental")
@@ -40,17 +41,20 @@ class Populacao(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=255, help_text="Escreva um título para a sua publicação")
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.CharField(max_length=255, help_text="Digite os autores da publicação")
     data_publicacao = models.DateTimeField(auto_now_add=True)
     tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
     municipio_atingido = models.ForeignKey(Municipio, on_delete=models.CASCADE)
     atores_envolvidos = models.ForeignKey(Ator, on_delete=models.CASCADE)
     populacao_atingida = models.ForeignKey(Populacao, on_delete=models.CASCADE)
-    conteudo = RichTextField(blank=True, null=True)
-    fontes = RichTextField(blank=True, null=True)
+    conteudo = CKEditor5Field('Text', config_name='extends')
+    fontes = CKEditor5Field('Text', config_name='extends')
 
     class Meta:
         verbose_name_plural = 'Publicações'
 
     def __str__(self):
         return self.titulo + ' | ' + str(self.autor)
+
+    def data_publicacao_formatada(self):
+        return self.data_publicacao.strftime('%d/%m/%Y')

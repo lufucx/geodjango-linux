@@ -31,8 +31,7 @@
         <h1>Artigos</h1>
         <ul>
             {% for post in posts %}
-                <li><a href="{% url 'posts:post-detail' post.pk %}">{{ post.titulo }}</a> - por {{ post.autor.first_name }}
-                {{ post.autor.last_name }}</li>
+                <li><a href="{% url 'posts:post-detail' post.pk %}">{{ post.titulo }}</a> - por {{ post.autor }}</li>
             {% endfor %}
         </ul>
     </main>
