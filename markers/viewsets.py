@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework_gis import filters
 
 from markers.models import Marker
@@ -12,4 +12,5 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     )
     queryset = Marker.objects.all()
     serializer_class = MarkerSerializer
+    permission_classes = [permissions.IsAuthenticated]
 

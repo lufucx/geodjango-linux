@@ -17,10 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from .api_views import api_root  
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('markers.api')),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('macacoprego/', admin.site.urls),
+    path('api/', api_root, name='api-root'),
+     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Obtain token
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Refresh token
+    path('api/markers/', include('markers.api')),
+    path('api/posts/', include('posts.api_urls')),  # Create a separate api_urls.py for API routes in posts
     path('posts/', include('posts.urls')),
     path('', include('markers.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls')),

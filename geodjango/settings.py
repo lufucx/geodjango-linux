@@ -45,13 +45,15 @@ INSTALLED_APPS = [
     "rest_framework_gis",
     "leaflet",
     'django_ckeditor_5',
-    "ckeditor",
+    'admin_honeypot',
     
     # Local Apps
     "markers",
     "posts",
+    "autores",
+    'tipografia',
+    
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -335,3 +337,4 @@ JAZZMIN_SETTINGS = {
         {"app": "books"},
     ],
 }
+

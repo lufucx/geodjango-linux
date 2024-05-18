@@ -24,12 +24,12 @@ class City(models.Model):
 
 
 class Marker(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    categories = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
-    city = models.ForeignKey('City', on_delete=models.CASCADE, default=1)
+    name = models.CharField(max_length=255, help_text="Insira um título para o marcador")
+    description = models.TextField(blank=True, null=True, help_text="Insira uma descrição para o marcador")
+    categories = models.ForeignKey('Category', on_delete=models.CASCADE, default=1, help_text="Escolha o tipo de conflito ambiental")
+    city = models.ForeignKey('City', on_delete=models.CASCADE, default=1, help_text="Escolha a cidade do conflito")
     location = models.PointField()
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)  # Ou ManyToManyField(Post)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, help_text="Escolha a sua publicação para o marcador")  # Ou ManyToManyField(Post)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     ICON_CHOICES = (
@@ -42,11 +42,11 @@ class Marker(models.Model):
         # Add more choices as needed
     )
     icon_choice = models.CharField(
-        _('Icon choice'),
+        _('Cor do marcador'),
         max_length=10,
         choices=ICON_CHOICES,
         default='green',  # Default icon choice
-        help_text=_("Escolha o tipo de marcador!")
+        help_text=_("Escolha a cor do marcador!")
     )
 
     

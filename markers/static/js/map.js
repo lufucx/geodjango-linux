@@ -1,17 +1,17 @@
-var map = L.map('map').setView([-22.8932366, -42.1567423], 11);
+var map = L.map('map').setView([-22.87976527566221, -42.139631566232666], 11);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
+googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
+googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
 var iconMapping = {
@@ -69,12 +69,12 @@ var iconMapping = {
 const markers = JSON.parse(document.getElementById('markers-data').textContent);
 
 const markerClusters = L.markerClusterGroup(); // Create a marker cluster group
-markers.features.forEach(function(feature) {
+markers.features.forEach(function (feature) {
     const iconChoice = feature.properties.icon_choice; // Choose the appropriate icon based on the icon choice
     var icon = iconMapping[iconChoice] || greenIcon; // Default to greenIcon if icon choice not found
-    var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });    
+    var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });
     var popupContent = '<b>' + feature.properties.name + '</b>';
-    
+
     // Add city and category with a hyphen between them if they exist
     if (feature.properties.city && feature.properties.categories) {
         popupContent += '<br><i>' + feature.properties.city + ' - ' + feature.properties.categories + '</i><br>';
@@ -83,7 +83,7 @@ markers.features.forEach(function(feature) {
     } else if (feature.properties.categories) {
         popupContent += '<br>' + feature.properties.categories;
     }
-    
+
     if (feature.properties.description) {
         popupContent += '<br>' + feature.properties.description;
     }
@@ -91,14 +91,14 @@ markers.features.forEach(function(feature) {
         var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
         popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
     }
-    
+
     marker.bindPopup(popupContent);
     markerClusters.addLayer(marker); // Add marker to the cluster group
 });
 
 map.addLayer(markerClusters); // Add the marker cluster group to the map
 
-map.locate().on("locationfound", (e) => map.setView([-22.8932366, -42.1567423], 11));
+map.locate().on("locationfound", (e) => map.setView([-22.87976527566221, -42.139631566232666], 11));
 
 async function load_markers() {
     const markers_url = `/api/markers/?in_bbox=${map.getBounds().toBBoxString()}`;
@@ -110,12 +110,12 @@ async function load_markers() {
 async function render_markers() {
     const markers = await load_markers();
     markerClusters.clearLayers(); // Clear existing markers before adding new ones
-    markers.features.forEach(function(feature) {
+    markers.features.forEach(function (feature) {
         const iconChoice = feature.properties.icon_choice; // Choose the appropriate icon based on the icon choice
         var icon = iconMapping[iconChoice] || greenIcon; // Default to greenIcon if icon choice not found
-        var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });          
+        var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });
         var popupContent = '<b>' + feature.properties.name + '</b>';
-        
+
         // Add city and category with a hyphen between them if they exist
         if (feature.properties.city && feature.properties.categories) {
             popupContent += '<br><i>' + feature.properties.city + ' - ' + feature.properties.categories + '</i>';
@@ -124,7 +124,7 @@ async function render_markers() {
         } else if (feature.properties.categories) {
             popupContent += '<br>' + feature.properties.categories;
         }
-        
+
         if (feature.properties.description) {
             popupContent += '<br>' + feature.properties.description;
         }
@@ -132,7 +132,7 @@ async function render_markers() {
             var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
             popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
         }
-        
+
         marker.bindPopup(popupContent);
         markerClusters.addLayer(marker); // Add marker to the cluster group
     });
@@ -159,7 +159,7 @@ function fullScreenView() {
 }
 
 // Reset view
-$('.zoom-to-layer').click(function () {map.setView([-22.8932366, -42.1567423], 11)});
+$('.zoom-to-layer').click(function () { map.setView([-22.87976527566221, -42.139631566232666], 11) });
 
 // Print map
 L.control.browserPrint({ position: 'topright' }).addTo(map);
@@ -170,22 +170,22 @@ L.Control.geocoder().addTo(map);
 
 // Legenda
 let CollapsibleTextbox = L.Control.extend({
-    onAdd: function() {
+    onAdd: function () {
         // Create a container for the control
         var container = L.DomUtil.create('div', 'leaflet-control-collapsible-textbox');
-        
+
         // Create a button to toggle the text box visibility
         var button = L.DomUtil.create('button', 'leaflet-control-collapsible-textbox-button', container);
-        button.innerHTML = '<span class="material-symbols-outlined">share_location</span>';
+        button.innerHTML = '<span class="material-symbols-outlined"">share_location</span>';
         button.title = 'Toggle Info Box'; // Tooltip
         // Apply CSS styles to the button to make it larger
         button.style.fontSize = '16px'; // Adjust the font size as desired
-        button.style.padding = '3.5px'; // Adjust padding as desired
         button.style.cursor = 'pointer'; // Change cursor to pointer when hovering
+        button.style.borderRadius = '5px';
         button.style.backgroundColor = 'white'; // Set button background color to white
 
-        
-        
+
+
         // Create the text box
         var textBox = L.DomUtil.create('div', 'leaflet-control-collapsible-textbox-content', container);
         textBox.innerHTML = `
@@ -202,19 +202,19 @@ let CollapsibleTextbox = L.Control.extend({
             <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
             <span style="display:inline; vertical-align:top;">Araruama</span><br>
         `;
-        
+
         // Add styles to the text box
         textBox.style.backgroundColor = 'white';
         textBox.style.color = 'black';
         textBox.style.padding = '10px';
         textBox.style.borderRadius = '5px';
         textBox.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.3)';
-        
+
         // Initially hide the text box
         textBox.style.display = 'none';
-        
+
         // Add click event listener to the button
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             // Toggle the display of the text box
             if (textBox.style.display === 'none') {
                 textBox.style.display = 'block';
@@ -222,7 +222,7 @@ let CollapsibleTextbox = L.Control.extend({
                 textBox.style.display = 'none';
             }
         });
-        
+
         // Return the container element
         return container;
     }
@@ -230,3 +230,56 @@ let CollapsibleTextbox = L.Control.extend({
 
 // Create and add the collapsible text box control to the map
 new CollapsibleTextbox({ position: 'topleft' }).addTo(map);
+// Botão para redimensionar o mapa
+
+let resizeButton = L.Control.extend({
+    onAdd: function () {
+        var container = L.DomUtil.create('div', 'leaflet-control leaflet-resize-control leaflet-bar');
+        var button = L.DomUtil.create('a', 'leaflet-control-zoom-in leaflet-bar-part', container);
+        button.innerHTML = '<i class="fa-solid fa-repeat"></i>';
+        button.title = 'Resize Map'; // Tooltip
+
+        L.DomEvent.disableClickPropagation(container);
+
+        button.addEventListener('click', function () {
+            // Here you can define the logic to resize the map
+            map.setView([-22.87976527566221, -42.139631566232666], 11); // Example: setting the view to specific coordinates and zoom level
+        });
+
+        // Evita que o cursor mude para o cursor de seleção de texto
+        button.style.cursor = 'pointer';
+
+        return container;
+    }
+});
+
+new resizeButton({ position: 'topright' }).addTo(map);
+
+// Botão para visualização em tela cheia
+let fullScreenButton = L.Control.extend({
+    onAdd: function () {
+        var container = L.DomUtil.create('div', 'leaflet-control leaflet-fullscreen-control leaflet-bar');
+        var button = L.DomUtil.create('a', 'leaflet-control-zoom-in leaflet-bar-part', container);
+        button.innerHTML = '<i class="fa-solid fa-expand"></i>';       
+        button.title = 'Toggle Full Screen'; // Tooltip
+
+        L.DomEvent.disableClickPropagation(container);
+
+        button.addEventListener('click', function () {
+            // Here you can define the logic to toggle full screen
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                mapId.requestFullscreen();
+            }
+        });
+
+        // Evita que o cursor mude para o cursor de seleção de texto
+        button.style.cursor = 'pointer';
+
+        return container;
+    }
+});
+
+// Adiciona o botão de tela cheia ao mapa
+new fullScreenButton({ position: 'topright' }).addTo(map);
