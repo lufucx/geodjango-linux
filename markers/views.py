@@ -7,6 +7,7 @@ from django.shortcuts import render
 from autores.models import Artigo
 from tipografia.models import Conflito
 
+
 class MarkersMapView(TemplateView):
     template_name = "map.html"
 
@@ -22,7 +23,7 @@ class MarkersMapView(TemplateView):
         # Fetch articles data
         artigos = Artigo.objects.all()
         conflitos = Conflito.objects.all()
-
+        
         # Pass serialized markers and articles data to the template context
         context['markers'] = json.loads(serialized_markers)
         context['artigos'] = artigos
