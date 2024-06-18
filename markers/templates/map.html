@@ -123,9 +123,13 @@
         <h1 class="text-center">Sobre Nós</h1>
         <div class="underline-2"></div>
 
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, nam eveniet. Veniam, rerum quibusdam!
-            Quibusdam sunt facere maiores aperiam. Doloremque adipisci placeat repudiandae sit beatae fugiat quo
-            nam dolores fuga.</p>
+        {% if sobre %}
+            {% for item in sobre %}
+                <p>{{ item.sobre|safe }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Conteúdo não disponível.</p>
+        {% endif %}
         <br><br><br><br><br><br><br><br><br><br>
     </div>
 </div>

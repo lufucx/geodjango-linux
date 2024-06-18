@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "posts",
     "autores",
     'tipografia',
+    'sobre',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
