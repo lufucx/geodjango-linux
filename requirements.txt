@@ -1,5 +1,5 @@
 asgiref==3.8.1
-Django==5.0.4
+Django==5.0.7
 django-admin-honeypot-updated-2021==1.2.0
 django-ckeditor-5==0.2.12
 django-filter==24.2
