@@ -4,16 +4,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-});
-
-googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-});
-
 var iconMapping = {
     'red': L.icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -66,12 +56,33 @@ var iconMapping = {
     // Add more icons as needed
 };
 
+// Initialize overlay layer groups
+const categoryLayers = {};
+const cityLayers = {};
+
 const markers = JSON.parse(document.getElementById('markers-data').textContent);
 
-const markerClusters = L.markerClusterGroup(); // Create a marker cluster group
+// Create layer groups for each category and city
 markers.features.forEach(function (feature) {
-    const iconChoice = feature.properties.icon_choice; // Choose the appropriate icon based on the icon choice
-    var icon = iconMapping[iconChoice] || greenIcon; // Default to greenIcon if icon choice not found
+
+    const category = feature.properties.categories;
+    const city = feature.properties.city;
+
+    // Initialize layers if they don't exist
+    if (!categoryLayers[category]) {
+        categoryLayers[category] = L.layerGroup();
+    }
+    if (!cityLayers[city]) {
+        cityLayers[city] = L.layerGroup();
+    }
+});
+
+// Create a marker cluster group
+const markerClusters = L.markerClusterGroup();
+
+markers.features.forEach(function (feature) {
+    const iconChoice = feature.properties.icon_choice;
+    var icon = iconMapping[iconChoice] || iconMapping['green']; // Default to greenIcon if icon choice not found
     var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });
     var popupContent = '<b>' + feature.properties.name + '</b>';
 
@@ -88,15 +99,24 @@ markers.features.forEach(function (feature) {
         popupContent += '<br>' + feature.properties.description;
     }
     if (feature.properties.post) {
-        var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
+        var postUrl = `/posts/p/${feature.properties.post}/`;
         popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
     }
 
     marker.bindPopup(popupContent);
-    markerClusters.addLayer(marker); // Add marker to the cluster group
+    markerClusters.addLayer(marker);
+
+    // Add marker to the appropriate category and city layers
+    if (categoryLayers[feature.properties.categories]) {
+        categoryLayers[feature.properties.categories].addLayer(marker);
+    }
+    if (cityLayers[feature.properties.city]) {
+        cityLayers[feature.properties.city].addLayer(marker);
+    }
 });
 
-map.addLayer(markerClusters); // Add the marker cluster group to the map
+// Add the marker cluster group to the map
+map.addLayer(markerClusters);
 
 map.locate().on("locationfound", (e) => map.setView([-22.87976527566221, -42.139631566232666], 11));
 
@@ -110,9 +130,10 @@ async function load_markers() {
 async function render_markers() {
     const markers = await load_markers();
     markerClusters.clearLayers(); // Clear existing markers before adding new ones
+
     markers.features.forEach(function (feature) {
-        const iconChoice = feature.properties.icon_choice; // Choose the appropriate icon based on the icon choice
-        var icon = iconMapping[iconChoice] || greenIcon; // Default to greenIcon if icon choice not found
+        const iconChoice = feature.properties.icon_choice;
+        var icon = iconMapping[iconChoice] || iconMapping['green']; // Default to greenIcon if icon choice not found
         var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });
         var popupContent = '<b>' + feature.properties.name + '</b>';
 
@@ -129,26 +150,40 @@ async function render_markers() {
             popupContent += '<br>' + feature.properties.description;
         }
         if (feature.properties.post) {
-            var postUrl = `/posts/p/${feature.properties.post}/`; // Construa a URL para a página do post vinculado
+            var postUrl = `/posts/p/${feature.properties.post}/`;
             popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
         }
 
         marker.bindPopup(popupContent);
-        markerClusters.addLayer(marker); // Add marker to the cluster group
+        markerClusters.addLayer(marker);
+
+        // Add marker to the appropriate category and city layers
+        if (categoryLayers[feature.properties.categories]) {
+            categoryLayers[feature.properties.categories].addLayer(marker);
+        }
+        if (cityLayers[feature.properties.city]) {
+            cityLayers[feature.properties.city].addLayer(marker);
+        }
     });
 }
 
-// Layer Control
-const baseLayers = {
-    "OpenStreetMap": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-    "Google Maps": googleStreets,
-    "Google Satellite": googleSat,
+// Combine the overlays into one object
+const cityLayer = {
+    ...cityLayers
 };
 
-L.control.layers(baseLayers, null, { collapsed: false, position: 'topright' }).addTo(map);
+const categoryLayer = {
+    ...categoryLayers
+}
+
+// Add the base layers and overlay layers to the map
+L.control.layers(cityLayer, categoryLayer, { collapsed: false, position: 'topright' }).addTo(map);
+
+
+// Listen to map movement and render markers accordingly
 map.on("moveend", render_markers);
 
-//Full screen map view
+// Full screen map view
 var mapId = document.getElementById('map');
 function fullScreenView() {
     if (document.fullscreenElement) {
@@ -164,74 +199,10 @@ $('.zoom-to-layer').click(function () { map.setView([-22.87976527566221, -42.139
 // Print map
 L.control.browserPrint({ position: 'topright' }).addTo(map);
 
-
 // Search function
 L.Control.geocoder().addTo(map);
 
-// Legenda
-let CollapsibleTextbox = L.Control.extend({
-    onAdd: function () {
-        // Create a container for the control
-        var container = L.DomUtil.create('div', 'leaflet-control-collapsible-textbox');
-
-        // Create a button to toggle the text box visibility
-        var button = L.DomUtil.create('button', 'leaflet-control-collapsible-textbox-button', container);
-        button.innerHTML = '<span class="material-symbols-outlined"">share_location</span>';
-        button.title = 'Toggle Info Box'; // Tooltip
-        // Apply CSS styles to the button to make it larger
-        button.style.fontSize = '16px'; // Adjust the font size as desired
-        button.style.cursor = 'pointer'; // Change cursor to pointer when hovering
-        button.style.borderRadius = '5px';
-        button.style.backgroundColor = 'white'; // Set button background color to white
-
-
-
-        // Create the text box
-        var textBox = L.DomUtil.create('div', 'leaflet-control-collapsible-textbox-content', container);
-        textBox.innerHTML = `
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Vermelho</span><br>
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">São Pedro da Aldeia</span><br>
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Búzios</span><br>
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Cabo Frio</span><br>
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Arraial do Cabo</span><br>
-            <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" alt="Perigo" style="width:10px; height:auto; display:inline; margin-right:10px;">
-            <span style="display:inline; vertical-align:top;">Araruama</span><br>
-        `;
-
-        // Add styles to the text box
-        textBox.style.backgroundColor = 'white';
-        textBox.style.color = 'black';
-        textBox.style.padding = '10px';
-        textBox.style.borderRadius = '5px';
-        textBox.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.3)';
-
-        // Initially hide the text box
-        textBox.style.display = 'none';
-
-        // Add click event listener to the button
-        button.addEventListener('click', function () {
-            // Toggle the display of the text box
-            if (textBox.style.display === 'none') {
-                textBox.style.display = 'block';
-            } else {
-                textBox.style.display = 'none';
-            }
-        });
-
-        // Return the container element
-        return container;
-    }
-});
-
-// Create and add the collapsible text box control to the map
-new CollapsibleTextbox({ position: 'topleft' }).addTo(map);
-// Botão para redimensionar o mapa
-
+// Button to resize map
 let resizeButton = L.Control.extend({
     onAdd: function () {
         var container = L.DomUtil.create('div', 'leaflet-control leaflet-resize-control leaflet-bar');
@@ -242,11 +213,9 @@ let resizeButton = L.Control.extend({
         L.DomEvent.disableClickPropagation(container);
 
         button.addEventListener('click', function () {
-            // Here you can define the logic to resize the map
-            map.setView([-22.87976527566221, -42.139631566232666], 11); // Example: setting the view to specific coordinates and zoom level
+            map.setView([-22.87976527566221, -42.139631566232666], 11);
         });
 
-        // Evita que o cursor mude para o cursor de seleção de texto
         button.style.cursor = 'pointer';
 
         return container;
@@ -255,7 +224,7 @@ let resizeButton = L.Control.extend({
 
 new resizeButton({ position: 'topright' }).addTo(map);
 
-// Botão para visualização em tela cheia
+// Button to toggle full-screen
 let fullScreenButton = L.Control.extend({
     onAdd: function () {
         var container = L.DomUtil.create('div', 'leaflet-control leaflet-fullscreen-control leaflet-bar');
@@ -266,7 +235,6 @@ let fullScreenButton = L.Control.extend({
         L.DomEvent.disableClickPropagation(container);
 
         button.addEventListener('click', function () {
-            // Here you can define the logic to toggle full screen
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             } else {
@@ -274,12 +242,10 @@ let fullScreenButton = L.Control.extend({
             }
         });
 
-        // Evita que o cursor mude para o cursor de seleção de texto
         button.style.cursor = 'pointer';
 
         return container;
     }
 });
 
-// Adiciona o botão de tela cheia ao mapa
 new fullScreenButton({ position: 'topright' }).addTo(map);

@@ -1,5 +1,4 @@
 import json
-from django.core.serializers import serialize
 from django.urls import reverse
 from django.views.generic import TemplateView
 from markers.models import Marker, Category, City
@@ -7,7 +6,7 @@ from django.shortcuts import render
 from autores.models import Artigo
 from tipografia.models import Conflito
 from sobre.models import Sobre
-
+from django.contrib.gis.geos import Point
 
 class MarkersMapView(TemplateView):
     template_name = "map.html"
@@ -18,8 +17,32 @@ class MarkersMapView(TemplateView):
         # Fetch markers data
         markers = Marker.objects.all()
 
-        # Serialize markers to GeoJSON format
-        serialized_markers = serialize('geojson', markers, fields=('name', 'description', 'location', 'icon_choice'))
+        # Manually construct the GeoJSON structure
+        features = []
+        for marker in markers:
+            feature = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [marker.location.x, marker.location.y],
+                },
+                "properties": {
+                    "id": marker.id,
+                    "name": marker.name,
+                    "description": marker.description,
+                    "categories": marker.categories.category_name,
+                    "city": marker.city.name,
+                    "icon_choice": marker.icon_choice,
+                    "post": marker.post.id if marker.post else None,
+                },
+            }
+            features.append(feature)
+
+        # Construct the full GeoJSON response
+        serialized_markers = {
+            "type": "FeatureCollection",
+            "features": features,
+        }
 
         # Fetch articles data
         artigos = Artigo.objects.all()
@@ -27,7 +50,7 @@ class MarkersMapView(TemplateView):
         sobre = Sobre.objects.all()
         
         # Pass serialized markers and articles data to the template context
-        context['markers'] = json.loads(serialized_markers)
+        context['markers'] = serialized_markers
         context['artigos'] = artigos
         context['conflitos'] = conflitos
         context['sobre'] = sobre
