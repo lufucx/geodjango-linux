@@ -47,15 +47,24 @@
             <p>Publicado em: {{ post.data_publicacao_formatada }}</p>
             <p>Última atualização: {{ post.data_atualizacao_formatada }}</p>
         </small>
-        <h2>Tema</h2>
-        <p>{{ post.tema }}</p>
-        <h2>Município Atingido</h2>
-        <p>{{ post.municipio_atingido }}</p>
-        <h2>Atores Envolvidos</h2>
-        <p>{{ post.atores_envolvidos }}</p>
-        <h2>População Atingida</h2>
-        <p>{{ post.populacao_atingida }}</p>
-        <hr>
+        <div class="info-container">
+            <div class="info-box">
+                <h2>Tema</h2>
+                <p>{{ post.tema }}</p>
+            </div>
+            <div class="info-box">
+                <h2>Município Atingido</h2>
+                <p>{{ post.municipio_atingido }}</p>
+            </div>
+            <div class="info-box">
+                <h2>Atores Envolvidos</h2>
+                <p>{{ post.atores_envolvidos }}</p>
+            </div>
+            <div class="info-box">
+                <h2>População Atingida</h2>
+                <p>{{ post.populacao_atingida }}</p>
+            </div>
+        </div>    
         {{ post.conteudo | safe}}
         <h2>Fontes</h2>
         <p>{{ post.fontes | safe}}</p>
