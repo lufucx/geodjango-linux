@@ -57,14 +57,15 @@ var iconMapping = {
 };
 
 // Initialize overlay layer groups
+// Initialize overlay layer groups
 const categoryLayers = {};
 const cityLayers = {};
 
+// Fetch marker data
 const markers = JSON.parse(document.getElementById('markers-data').textContent);
 
 // Create layer groups for each category and city
 markers.features.forEach(function (feature) {
-
     const category = feature.properties.categories;
     const city = feature.properties.city;
 
@@ -80,57 +81,8 @@ markers.features.forEach(function (feature) {
 // Create a marker cluster group
 const markerClusters = L.markerClusterGroup();
 
-markers.features.forEach(function (feature) {
-    const iconChoice = feature.properties.icon_choice;
-    var icon = iconMapping[iconChoice] || iconMapping['green']; // Default to greenIcon if icon choice not found
-    var marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], { icon: icon });
-    var popupContent = '<b>' + feature.properties.name + '</b>';
-
-    // Add city and category with a hyphen between them if they exist
-    if (feature.properties.city && feature.properties.categories) {
-        popupContent += '<br><i>' + feature.properties.city + ' - ' + feature.properties.categories + '</i><br>';
-    } else if (feature.properties.city) {
-        popupContent += '<br>' + feature.properties.city;
-    } else if (feature.properties.categories) {
-        popupContent += '<br>' + feature.properties.categories;
-    }
-
-    if (feature.properties.description) {
-        popupContent += '<br>' + feature.properties.description;
-    }
-    if (feature.properties.post) {
-        var postUrl = `/posts/p/${feature.properties.post}/`;
-        popupContent += '<br><a href="' + postUrl + '">Ver Mais</a>';
-    }
-
-    marker.bindPopup(popupContent);
-    markerClusters.addLayer(marker);
-
-    // Add marker to the appropriate category and city layers
-    if (categoryLayers[feature.properties.categories]) {
-        categoryLayers[feature.properties.categories].addLayer(marker);
-    }
-    if (cityLayers[feature.properties.city]) {
-        cityLayers[feature.properties.city].addLayer(marker);
-    }
-});
-
-// Add the marker cluster group to the map
-map.addLayer(markerClusters);
-
-map.locate().on("locationfound", (e) => map.setView([-22.87976527566221, -42.139631566232666], 11));
-
-async function load_markers() {
-    const markers_url = `/api/markers/?in_bbox=${map.getBounds().toBBoxString()}`;
-    const response = await fetch(markers_url);
-    const geojson = await response.json();
-    return geojson;
-}
-
-async function render_markers() {
-    const markers = await load_markers();
-    markerClusters.clearLayers(); // Clear existing markers before adding new ones
-
+// Function to add markers to the appropriate layer groups
+function addMarkersToLayers() {
     markers.features.forEach(function (feature) {
         const iconChoice = feature.properties.icon_choice;
         var icon = iconMapping[iconChoice] || iconMapping['green']; // Default to greenIcon if icon choice not found
@@ -155,7 +107,6 @@ async function render_markers() {
         }
 
         marker.bindPopup(popupContent);
-        markerClusters.addLayer(marker);
 
         // Add marker to the appropriate category and city layers
         if (categoryLayers[feature.properties.categories]) {
@@ -164,21 +115,60 @@ async function render_markers() {
         if (cityLayers[feature.properties.city]) {
             cityLayers[feature.properties.city].addLayer(marker);
         }
+
+        // Add marker to the marker cluster group
+        markerClusters.addLayer(marker);
     });
 }
 
-// Combine the overlays into one object
+// Add markers to the layers
+addMarkersToLayers();
+
+// Add the marker cluster group to the map
+map.addLayer(markerClusters);
+
+// Combine the overlays into one object for controls
 const cityLayer = {
     ...cityLayers
 };
 
 const categoryLayer = {
     ...categoryLayers
+};
+
+// Function to update markers based on selected layer
+function updateMarkersOnSelection(selectedLayer) {
+    markerClusters.clearLayers(); // Clear all markers
+    selectedLayer.eachLayer(layer => markerClusters.addLayer(layer)); // Add only the selected markers
 }
 
-// Add the base layers and overlay layers to the map
-L.control.layers(cityLayer, categoryLayer, { collapsed: false, position: 'topright' }).addTo(map);
+// Event listener for layer add and remove events
+map.on('overlayadd', function (e) {
+    if (cityLayers[e.name]) {
+        updateMarkersOnSelection(cityLayers[e.name]);
+    } else if (categoryLayers[e.name]) {
+        updateMarkersOnSelection(categoryLayers[e.name]);
+    }
+});
 
+map.on('overlayremove', function (e) {
+    // When a layer is removed, re-add all markers to ensure visibility
+    markerClusters.clearLayers();
+    addMarkersToLayers();
+});
+
+// Add the base layers and overlay layers to the map
+L.control.layers(null, categoryLayer, { collapsed: false, position: 'topright' }).addTo(map);
+L.control.layers(null, cityLayer, { collapsed: false, position: 'topright' }).addTo(map);
+
+// Function to render markers dynamically as the map moves
+async function render_markers() {
+    const markers = await load_markers();
+    markerClusters.clearLayers(); // Clear existing markers before adding new ones
+
+    // Add markers to layers and map
+    addMarkersToLayers();
+}
 
 // Listen to map movement and render markers accordingly
 map.on("moveend", render_markers);

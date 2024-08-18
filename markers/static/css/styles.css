@@ -11,17 +11,11 @@ body {
 }
 
 .navbar-nav .nav-item {
-    margin-right: 30px;
     cursor: pointer;
 }
 
-
-
 .navbar-brand {
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: 400;
-    letter-spacing: 3px;
+    margin: 0;
 }
 
 .navbar-logo {
@@ -33,11 +27,15 @@ body {
 
 .custom-container {
     margin-top: 90px !important;
-    background-color: #f9fbfd;
+    background-color: #f3e7d75b;
 }
 
 .custom-container-2 {
     margin-top: 90px !important;
+    background-color: #a9cf54;
+}
+
+footer {
     background-color: #a9cf54;
 }
 
@@ -75,6 +73,7 @@ main {
         height: 100vh;
     }
 }
+
 
 
 .underline {
@@ -122,6 +121,14 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
+textarea {
+    resize: none;
+}
+
+/* Posts */
+.dot::before {
+    content: "·";
+}

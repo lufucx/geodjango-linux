@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.gis",
+    'django_extensions',
 
     # 3rd party apps
     "rest_framework",
@@ -93,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
-        'PASSWORD': 'plasticlove00',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
