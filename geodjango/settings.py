@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Usando PostGIS para suporte GIS
         'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'plasticlove00',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -319,6 +319,7 @@ JAZZMIN_SETTINGS = {
     # Links do menu superior
     "topmenu_links": [
         {"name": "Início", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Visualizar o site", "url": "markers:markersmapview", "new_window": True},
         {"model": "auth.User"},
         {"app": "posts"},
         {"app": "markers"},
