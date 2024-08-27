@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('macacoprego/', admin.site.urls),
     path('api/', include('markers.api')),
     path('', include('markers.urls')),

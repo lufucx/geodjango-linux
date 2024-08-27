@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     "rest_framework_gis",  # Extensões GIS para Django REST Framework
     "leaflet",  # Integração com a biblioteca de mapas Leaflet
     'django_ckeditor_5',  # Editor de texto avançado
-    'admin_honeypot',  # Segurança para a área administrativa
     'crispy_forms',  # Estilização de formulários
     'crispy_bootstrap5',  # Integração do Crispy Forms com Bootstrap 5
     # Aplicações locais
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 # Configuração do URL principal do projeto
@@ -300,25 +300,82 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Mapa Conflitos Admin",
-    "site_header": "Conflitos Ambientais - Admin",
-    "site_brand": " Mapa - Admin",
-    "site_icon": None,
+    # Títulos e logos
+    "site_title": "Administração Conflitos Ambientais",
+    "site_header": "Conflitos Ambientais",
+    "site_brand": "Admin - ConflitosAmb",
+    "site_logo": "assets/Logo.svg",  # Atualize para o caminho correto do logo
+    "login_logo": "assets/Pin.png",
+    "login_logo_dark": "assets/Logo.svg",
+    "site_logo_classes": "assets/Logo.svg",
+    "site_icon": "assets/Logo.svg",  # Atualize para o caminho correto do favicon
+    "welcome_sign": "Bem-vindo à administração de Conflitos Ambientais",
+    "copyright": "© 2024 IFRJ",
+    "search_model": ["posts.Post", "markers.Marker"],
+
+    # Avatar do usuário
     "user_avatar": None,
-    "login_logo": None,
-    "show_ui_builder": True,
-        "topmenu_links": [
 
-        # Url that gets reversed (Permissions can be added)
-        {"name": "Inicio",  "url": "admin:index", "permissions": ["auth.view_user"]},
-
-        # external url that opens in a new window (Permissions can be added)
-        {"name": "Visualizar o site", "url": "markers:markersmapview", "new_window": True},
-
-        # model admin to link to (Permissions checked against model)
+    # Links do menu superior
+    "topmenu_links": [
+        {"name": "Início", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
+        {"app": "posts"},
+        {"app": "markers"},
 
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "books"},
     ],
+
+    # Links do menu do usuário
+    "usermenu_links": [
+        {"name": "Perfil", "url": "admin:auth_user_change", "permissions": ["auth.change_user"]},
+    ],
+
+    # Menu lateral
+    "show_sidebar": True,
+    "navigation_expanded": False,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["auth", "posts", "markers", "sobre", "tipografia"],
+    "custom_links": {
+        "posts": [{
+            "name": "Adicionar Post",
+            "url": "admin:posts_post_add",
+            "icon": "fas fa-plus-circle",
+            "permissions": ["posts.add_post"]
+        }],
+        "markers": [
+            {
+                "name": "Adicionar Marcador",
+                "url": "admin:markers_marker_add",  # URL para adicionar um novo marcador
+                "icon": "fas fa-map-marker-alt",
+                "permissions": ["markers.add_marker"],  # Permissão para adicionar marcador
+            },
+        ],
+    },
+
+    # Ícones personalizados
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "posts": "fas fa-newspaper",
+        "posts.Post": "fas fa-file-alt",
+        "markers": "fas fa-map-marker-alt",
+        "sobre": "fas fa-info-circle",
+        "tipografia": "fas fa-font",
+        "tipografia.Conflito": "fas fa-exclamation-triangle",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # Modal relacionado
+    "related_modal_active": True,
+
+    # Ajustes de UI
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+
+    # Formato da view de mudança
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
 }
