@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Usando PostGIS para suporte GIS
         'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
-        'PASSWORD': 'plasticlove00',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
