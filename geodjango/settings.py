@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "leaflet",
     'django_ckeditor_5',
     'admin_honeypot',
+    'crispy_forms',
+    'crispy_bootstrap5',
     
     # Local Apps
     "markers",
@@ -94,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'plasticlove00',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -339,3 +341,5 @@ JAZZMIN_SETTINGS = {
     ],
 }
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

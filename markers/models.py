@@ -2,6 +2,22 @@ from django.contrib.gis.db import models
 from posts.models import Post
 from django.utils.translation import gettext_lazy as _
 
+class Denuncia(models.Model):
+    nome_completo = models.CharField(max_length=255)
+    email = models.EmailField()
+    motivo = models.CharField(max_length=255)
+    cidade = models.CharField(max_length=100)
+    bairro = models.CharField(max_length=100)
+    mensagem = models.TextField()
+    arquivos = models.FileField(upload_to='denuncias/', blank=True, null=True)
+    data_envio = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Denúncias'
+
+    def __str__(self):
+        return f"Denúncia de {self.nome_completo} - {self.motivo}"
+
 class Category(models.Model):
     category_name = models.CharField('Tipo de conflito', max_length=50, help_text="Especifique o tipo de conflito ambiental")
     created_at = models.DateTimeField(auto_now_add=True)

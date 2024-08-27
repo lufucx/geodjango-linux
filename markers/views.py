@@ -2,12 +2,12 @@ import json
 from django.urls import reverse
 from django.views.generic import TemplateView
 from markers.models import Marker, Category, City
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from autores.models import Artigo
 from tipografia.models import Conflito
 from sobre.models import Sobre
 from django.contrib.gis.geos import Point
-
+from .forms import DenunciaForm
 class MarkersMapView(TemplateView):
     template_name = "map.html"
 
@@ -54,5 +54,14 @@ class MarkersMapView(TemplateView):
         context['artigos'] = artigos
         context['conflitos'] = conflitos
         context['sobre'] = sobre
+        context['form'] = DenunciaForm()
 
         return context
+    
+
+    def post(self, request, *args, **kwargs):
+        form = DenunciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('markers:markersmapview')  # Redireciona após o envio
+        return self.get(request, *args, form=form, **kwargs)
