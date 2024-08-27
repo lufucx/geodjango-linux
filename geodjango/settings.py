@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Usando PostGIS para suporte GIS
         'NAME': 'conflitos_ambientais',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'plasticlove00',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -298,3 +298,27 @@ CKEDITOR_5_CONFIGS = {
 # Configuração de backend de mensagens do Django para integração com o Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Mapa Conflitos Admin",
+    "site_header": "Conflitos Ambientais - Admin",
+    "site_brand": " Mapa - Admin",
+    "site_icon": None,
+    "user_avatar": None,
+    "login_logo": None,
+    "show_ui_builder": True,
+        "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Inicio",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # external url that opens in a new window (Permissions can be added)
+        {"name": "Visualizar o site", "url": "markers:markersmapview", "new_window": True},
+
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "books"},
+    ],
+}
