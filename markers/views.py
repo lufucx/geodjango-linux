@@ -8,16 +8,18 @@ from tipografia.models import Conflito
 from sobre.models import Sobre
 from django.contrib.gis.geos import Point
 from .forms import DenunciaForm
+
+# View genérica baseada em Template para exibir o mapa de marcadores
 class MarkersMapView(TemplateView):
     template_name = "map.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Fetch markers data
+        # Busca todos os marcadores
         markers = Marker.objects.all()
 
-        # Manually construct the GeoJSON structure
+        # Construção manual da estrutura GeoJSON
         features = []
         for marker in markers:
             feature = {
@@ -38,18 +40,18 @@ class MarkersMapView(TemplateView):
             }
             features.append(feature)
 
-        # Construct the full GeoJSON response
+        # Criação do GeoJSON completo para os marcadores
         serialized_markers = {
             "type": "FeatureCollection",
             "features": features,
         }
 
-        # Fetch articles data
+        # Busca de dados adicionais para o contexto
         artigos = Artigo.objects.all()
         conflitos = Conflito.objects.all()
         sobre = Sobre.objects.all()
-        
-        # Pass serialized markers and articles data to the template context
+
+        # Adiciona os dados ao contexto da template
         context['markers'] = serialized_markers
         context['artigos'] = artigos
         context['conflitos'] = conflitos
@@ -57,8 +59,8 @@ class MarkersMapView(TemplateView):
         context['form'] = DenunciaForm()
 
         return context
-    
 
+    # Método POST para lidar com envio de formulários
     def post(self, request, *args, **kwargs):
         form = DenunciaForm(request.POST, request.FILES)
         if form.is_valid():

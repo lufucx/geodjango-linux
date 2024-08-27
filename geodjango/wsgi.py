@@ -1,16 +1,14 @@
 """
 WSGI config for geodjango project.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
+Exposes the WSGI callable as a module-level variable named `application`.
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application
 
+# Configura o ambiente Django para usar as configurações do projeto 'geodjango'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'geodjango.settings')
 
+# Obtém a aplicação WSGI do Django
 application = get_wsgi_application()
