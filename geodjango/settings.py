@@ -306,8 +306,6 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Admin - ConflitosAmb",
     "site_logo": "assets/Logo.svg",  # Atualize para o caminho correto do logo
     "login_logo": "assets/Pin.png",
-    "login_logo_dark": "assets/Logo.svg",
-    "site_logo_classes": "assets/Logo.svg",
     "site_icon": "assets/Logo.svg",  # Atualize para o caminho correto do favicon
     "welcome_sign": "Bem-vindo à administração de Conflitos Ambientais",
     "copyright": "© 2024 IFRJ",
