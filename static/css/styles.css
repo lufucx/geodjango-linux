@@ -27,7 +27,7 @@ body {
 
 .custom-container {
     margin-top: 90px !important;
-    background-color: #f3e7d75b;
+    background-color: #f3e7d7a1;
 }
 
 .custom-container-2 {
@@ -91,7 +91,7 @@ main {
 }
 
 .card {
-    border: none;
+    border: none !important;
     padding: 15px;
 }
 

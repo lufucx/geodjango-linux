@@ -42,237 +42,258 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
-<body>  
-  <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary p-4 fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'markers:markersmapview' %}">
-                <img class="navbar-logo me-3" src="{% static '/assets/Logo.svg' %}" alt="Logo EcoLagos">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" id="home-menu" aria-current="page" href="#">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="team-menu" href="#">Equipe</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="about-menu" href="#">Sobre Nós</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-menu" href="#">Contate-nos</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>    
-</header>
 
-<main>
-  <div class="container-fluid mb-5 pb-5">
-      <div class="row">
-          <div class="col-11 col-lg-4 mx-auto me-2">
-              <h1 class="display-3 text-center text-md-start">Conflitos Ambientais na <span class="reg-cor">Região
-                      dos Lagos</span></h1>
-              <div class="container-sm mt-5 text-dark">
-                  <p class="lead text-justify text-md-start text-body-secondary mb-5 mb-lg-4">Lorem, ipsum dolor
-                      sit amet consectetur adipisicing elit. Sequi, nesciunt. Beatae consequatur
-                      temporibus et eveniet sapiente, ipsa nostrum enim deleniti quasi ut placeat similique saepe
-                      facilis dolor nemo, labore quis!
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, ipsum. Tempora
-                      delectus sunt, officia inventore fugiat quaerat? Quod, rerum, incidunt ea, nisi temporibus
-                      quo fugiat magnam quam consectetur maiores iusto.
-                  </p>
-              </div>
-          </div>
-          <div class="col-12 col-lg-7 map  mx-auto ms-2">
-              {{ markers|json_script:'markers-data' }}
-              <div id="map"></div>
-          </div>
-      </div>
-  </div>
-
-  
-  <div class="container-fluid text-primary p-5 custom-container">
-    <h1 class="text-center p-5 display-4 text-dark"><img style="height: 60px; margin-right: 15px;"
-            src="{% static '/assets/Pin.png'%}" alt="">Tipografia de Conflitos</h1>
-    <div class="row p-3">
-        {% for conflito in conflitos %}
-            <div class="col">
-                <h3 class="text-dark mt-5">{{ conflito.tipo }}</h3>
-                <p class="mt-4 text-dark">{{ conflito.descricao }}</p>
-            </div>
-            {% if forloop.counter|divisibleby:2 or forloop.last %}
-                </div><div class="row p-3">
-            {% endif %}
-        {% endfor %}
-    </div>
-</div>
-
-
-<div id="about-area" class="container-sm mt-5 text-dark">
-    <div class="row mt-5 p-5">
-        <h1 class="container-sm mt-5 text-dark">Sobre Nós</h1>
-        <div class="underline-2"></div>
-
-        {% if sobre %}
-            {% for item in sobre %}
-                <p>{{ item.sobre|safe }}</p>
-            {% endfor %}
-        {% else %}
-            <p>Conteúdo não disponível.</p>
-        {% endif %}
-        <br><br><br><br><br><br><br><br><br><br>
-    </div>
-</div>
-
-<div id="team-area" class="mt-5">
-    <h1 class="text-center">Equipe</h1>
-    <div class="underline"></div>
-    <h5 class="text-center mt-4">Alunos do IFRJ dedicados a impulsionar o futuro com conhecimento e inovação.
-    </h5>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-3 mt-5">
-                <div class="card text-center align-items-center">
-                    <img class="card-photo" src="{% static '/assets/equipe/Omar.jpg'%}" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Fundador</h4>
-                        <p class="text">Omar S. Nicolau</p>
-                        <p class="socials">
-                            <a href="https://www.linkedin.com/in/omar-nicolau-160a1329/?originalSubdomain=br"
-                                target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                        </p>
-                    </div>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-4 fixed-top">
+            <div class="container-fluid d-flex justify-content-between">
+                <a class="navbar-brand" href="{% url 'markers:markersmapview' %}">
+                    <img class="navbar-logo" src="{% static '/assets/Logo.svg' %}" alt="Logo EcoLagos">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="home-menu">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="about-menu" >Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="team-menu">Equipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-menu">Contate-nos</a>
+                        </li>
+                    </ul>
                 </div>
+                <!-- Espaço à direita para balancear o conteúdo -->
+                <div class="d-none d-lg-block"></div>
             </div>
-            <div class="col-md-3 mt-5">
-                <div class="card text-center align-items-center">
-                    <img class="card-photo" src="{% static '/assets/equipe/Igor.jpg'%}" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Desenvolvedor</h4>
-                        <p class="text">Igor O. Fernandes</p>
-                        <p class="socials">
-                            <a href="https://github.com/Mede1ro" target="_blank"><i
-                                    class="fa-brands fa-square-github"></i></a>
-                            <a href="https://github.com/Mede1ro" target="_blank"><i
-                                    class="fa-brands fa-linkedin"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mt-5">
-                <div class="card text-center align-items-center">
-                    <img class="card-photo" src="{% static '/assets/equipe/Luiz.jpg'%}" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Desenvolvedor</h4>
-                        <p class="text">Luiz P. Silva</p>
-                        <p class="socials">
-                            <a href="https://github.com/lufucx" target="_blank"><i
-                                    class="fa-brands fa-square-github"></i></a>
-                            <a href="https://github.com/lufucx" target="_blank"><i
-                                    class="fa-brands fa-linkedin"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mt-5">
-                <div class="card text-center align-items-center">
-                    <img class="card-photo" src="{% static '/assets/equipe/Carlos.jpg'%}" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Orientador Técnico</h4>
-                        <p class="text">Carlos A. F. Filho</p>
-                        <p class="socials">
-                            <a href="https://github.com/andecarlosfernandesifrj" target="_blank"><i
-                                    class="fa-brands fa-square-github"></i></a>
-                            <a href="https://www.linkedin.com/in/carlos-augusto-fernandes-filho-b3138b1b/"
-                                target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row text-center mt-5">
-            <div class="col">
-                <h4>Autores de Artigos</h4>
-            </div>
-        </div>
+        </nav>
         
-        <div class="row justify-content-center mt-5 pt-4 text-center">
-            {% for artigo in artigos %}
-            <div class="col-md-4 col-lg-4 pt-4">
-                <p class="display-5 mb-4">{{ artigo.ano }}</p>
-                {% for autor in artigo.autores.all %}
-                <p>{{ autor.nome }}</p>
+    </header>
+
+    <main>
+        <div id="home-area" class="container-fluid mb-5 pb-5">
+            <div class="row">
+                <div class="col-12 col-lg-4 mx-auto me-2">
+                    <h1 class="display-3 text-center text-md-start">Conflitos Ambientais na <span class="reg-cor">Região
+                            dos Lagos</span></h1>
+                    <div class="container-sm mt-5 text-dark">
+                        <p class="lead text-justify text-md-start text-body-secondary mb-5 mb-lg-5">Lorem, ipsum dolor
+                            sit amet consectetur adipisicing elit. Sequi, nesciunt. Beatae consequatur
+                            temporibus et eveniet sapiente, ipsa nostrum enim deleniti quasi ut placeat similique saepe
+                            facilis dolor nemo, labore quis!
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, ipsum. Tempora
+                            delectus sunt, officia inventore fugiat quaerat? Quod, rerum, incidunt ea, nisi temporibus
+                            quo fugiat magnam quam consectetur maiores iusto.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-7 me-3 me-lg-4">
+                    {{ markers|json_script:'markers-data' }}
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid text-primary p-5 custom-container">
+            <h1 class="text-center p-5 display-4 text-dark">
+                <img class="align-middle" style="height: 60px;" src="{% static '/assets/Pin.png'%}" alt="" />
+                <span>Tipografia de Conflitos</span>
+            </h1>
+
+            <div class="row p-3">
+                {% for conflito in conflitos %}
+                <div class="col">
+                    <h3 class="text-dark mt-5">{{ conflito.tipo }}</h3>
+                    <p class="mt-4 text-dark">{{ conflito.descricao }}</p>
+                </div>
+                {% if forloop.counter|divisibleby:2 or forloop.last %}
+                    </div><div class="row p-3">
+                    {% endif %}
                 {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>  
-    <div class="container-fluid custom-container-2 mt-5 p-5" id="contact-area">
-        <h1 class="text-center mt-5"><i class="fa-solid fa-envelope" style="margin-right: 15px; color:#212529;"></i>Contato</h1>
-        <div class="container">
-            <!-- Formulário Django -->
-            <form action="{% url 'markers:markersmapview' %}" method="POST" enctype="multipart/form-data" class="row g-3 mt-5 pb-5">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ form.nome_completo.id_for_label }}"></label>
-                        {{ form.nome_completo|as_crispy_field }}
+
+
+        <div class="container-fluid mt-5" id="about-area">
+            <div class="row mt-5 p-5">
+                <h1 class="text-center">Sobre Nós</h1>
+                <div class="underline-2"></div>
+                {% if sobre %}
+                {% for item in sobre %}
+                    <p>{{ item.sobre|safe }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Conteúdo não disponível.</p>
+            {% endif %}
+                <br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+
+        <div id="team-area" class="mt-5">
+            <h1 class="text-center">Equipe</h1>
+            <div class="underline"></div>
+            <h5 class="text-center mt-4">Alunos do IFRJ dedicados a impulsionar o futuro com conhecimento e inovação.
+            </h5>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Omar.jpg'%}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Fundador</h4>
+                                <p class="text">Omar S. Nicolau</p>
+                                <p class="socials">
+                                    <a href="https://www.linkedin.com/in/omar-nicolau-160a1329/?originalSubdomain=br" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ form.email.id_for_label }}"></label>
-                        {{ form.email|as_crispy_field }}
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Igor.png'%} " alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Desenvolvedor</h4>
+                                <p class="text">Igor O. Fernandes</p>
+                                <p class="socials">
+                                    <a href="https://github.com/Mede1ro" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                                    <a href="https://github.com/Mede1ro" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ form.motivo.id_for_label }}"></label>
-                        {{ form.motivo|as_crispy_field }}
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Luiz.jpg'%}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Desenvolvedor</h4>
+                                <p class="text">Luiz Fernando dos P. Silva</p>
+                                <p class="socials">
+                                    <a href="https://github.com/lufucx" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                                    <a href="https://github.com/lufucx" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ form.cidade.id_for_label }}"></label>
-                        {{ form.cidade|as_crispy_field }}
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Carlos.jpg'%}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Orientador Técnico</h4>
+                                <p class="text">Carlos A. F. Filho</p>
+                                <p class="socials">
+                                    <a href="https://github.com/andecarlosfernandesifrj" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                                    <a href="https://www.linkedin.com/in/carlos-augusto-fernandes-filho-b3138b1b/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ form.bairro.id_for_label }}"></label>
-                        {{ form.bairro|as_crispy_field }}
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Caju.jpg'%}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Auxiliar</h4>
+                                <p class="text">Caio A. Vieira Andrade</p>
+                                <p class="socials">
+                                    <a href="https://github.com/andecarlosfernandesifrj" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                                    <a href="https://www.linkedin.com/in/carlos-augusto-fernandes-filho-b3138b1b/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="{{ form.mensagem.id_for_label }}"></label>
-                        {{ form.mensagem|as_crispy_field }}
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="{{ form.arquivos.id_for_label }}"></label>
-                        {{ form.arquivos|as_crispy_field }}
-                    </div>
-                    <div class="col-12 d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn btn-dark">Enviar</button>
+                    <div class="col-md-3 mt-5">
+                        <div class="card text-center align-items-center">
+                            <img class="card-photo" src="{% static '/assets/equipe/Oliveira.jpg'%}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">Auxiliar</h4>
+                                <p class="text">Caio de O. Silva Fernandes</p>
+                                <p class="socials">
+                                    <a href="https://github.com/andecarlosfernandesifrj" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+                                    <a href="https://www.linkedin.com/in/carlos-augusto-fernandes-filho-b3138b1b/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-            
+                </div>
+                <div class="row text-center mt-5">
+                    <div class="col">
+                        <h4>Autores de Artigos</h4>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5 pt-4 text-center">
+                    {% for artigo in artigos %}
+                    <div class="col-md-4 col-lg-4 pt-4">
+                        <p class="display-5 mb-4">{{ artigo.ano }}</p>
+                        {% for autor in artigo.autores.all %}
+                        <p>{{ autor.nome }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
-</main>
 
-<footer class="p-3">
-    <p class="text-center">EcoLagos &copy; 2023. Todos os direitos reservados.</p>
-</footer>
+        <div class="container-fluid custom-container-2 mt-5 p-5" id="contact-area">
+            <h1 class="text-center mt-5"><i class="fa-solid fa-envelope" style="margin-right: 15px; color:#212529;"></i>Contato</h1>
+            <div class="container">
+                <form action="{% url 'markers:markersmapview' %}" method="POST" enctype="multipart/form-data" class="row g-3 mt-5 pb-5">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.nome_completo.id_for_label }}"></label>
+                            {{ form.nome_completo|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.email.id_for_label }}"></label>
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.motivo.id_for_label }}"></label>
+                            {{ form.motivo|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.cidade.id_for_label }}"></label>
+                            {{ form.cidade|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.bairro.id_for_label }}"></label>
+                            {{ form.bairro|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="{{ form.mensagem.id_for_label }}"></label>
+                            {{ form.mensagem|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="{{ form.arquivos.id_for_label }}"></label>
+                            {{ form.arquivos|as_crispy_field }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-dark">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </main>
+
+    <footer class="p-3">
+        <p class="text-center">EcoLagos &copy; 2023. Todos os direitos reservados.</p>
+    </footer>
 
 
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Mapa JS -->
+    <script src="{% static 'js/map.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 
-    <script src="{% static '/js/map.js' %}"></script>
-    <script src="{% static '/js/script.js' %}"></script>
-    <script src="{% static '/js/MenuIcon.js' %}"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-    crossorigin="anonymous"></script>
-    
 </body>
+
 </html>
