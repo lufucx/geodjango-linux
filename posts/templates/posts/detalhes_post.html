@@ -83,7 +83,9 @@
                 <p>{{ post.populacao_atingida }}</p>
             </div>
         </div>    
-        {{ post.conteudo | safe}}
+        <div class="post-content">
+            {{ post.conteudo | safe}}
+        </div>
         <h2>Fontes</h2>
         <p>{{ post.fontes | safe}}</p>
     </main>
