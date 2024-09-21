@@ -8,18 +8,6 @@ body {
     background-color: #f9fbfd;
 }
 
-/* Header and Navbar */
-.header {
-    background: rgba(254, 254, 254, 0.96) !important;
-    backdrop-filter: blur(3px);
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
 .logo {
     display: flex;
     flex-direction: column;
@@ -46,24 +34,29 @@ body {
 }
 
 .navbar {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    padding: 0 40px; /* Mesmo padding da navbar */
     background: rgba(254, 254, 254, 0.96) !important;
     backdrop-filter: blur(3px);
 }
 
-.navbar a, .navbar-nav .nav-item {
-    font-size: 16px;
-    color: #212529;
-    text-decoration: none;
-    font-weight: 500;
+.navbar-nav .nav-item {
     cursor: pointer;
 }
 
-.navbar a:hover, .navbar-nav .nav-item:hover {
-    color: #A9CF54;
+
+#navbarSupportedContent {
+    position: relative !important;
+    right: 2%;
+}
+
+.navbar-brand {
+    margin: 0;
+}
+
+.navbar-logo {
+    width: 75px;
+    background-color: #A9CF54;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 #menu-icon {
