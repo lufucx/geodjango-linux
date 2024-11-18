@@ -85,10 +85,9 @@ Features
     Database: This project uses PostgreSQL/PostGIS. Make sure you have a PostgreSQL instance with PostGIS enabled.
 
 ## Troubleshooting
+GDAL Installation: If you encounter issues with GDAL, ensure it is installed correctly. You may need to use pipwin to install it on Windows.
 
-    GDAL Installation: If you encounter issues with GDAL, ensure it is installed correctly. You may need to use pipwin to install it on Windows.
-
-    Example for installing GDAL with pipwin on Windows:
+Example for installing GDAL with pipwin on Windows:
 ``` venv
 pip install pipwin
 pipwin install gdal
